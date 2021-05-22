@@ -3,6 +3,10 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+import vueCustomElement from 'vue-custom-element'
+Vue.use(vueCustomElement)
+
+// new Vue({
+//   render: h => h(App),
+// }).$mount('#app')
+Vue.customElement('vue-widget', App)
