@@ -6,7 +6,9 @@
         <option
           v-for="coin in coins"
           :key="coin"
-        >{{ coin }}</option>
+        >
+        {{ coin }}
+        </option>
       </select>
 
       <select @change="arbCheck()" v-model="quote">
@@ -14,13 +16,16 @@
         <option
           v-for="quote in quotes"
           :key="quote"
-        >{{ quote}}</option>
+        >
+        {{ quote}}
+        </option>
       </select>
     </div>
 
     <div id="output">
       <div v-if="!coins.length">
-        <p>Gecko, we have a problem.</p>
+        <!-- https://www.coingecko.com/en/branding -->
+        <img src="../public/gecko.webp" alt="CoinGecko logo">
       </div>
       <div v-else-if="coin && !quote">
         <p>{{ loadQuotes }}</p>
@@ -32,7 +37,16 @@
         <p>No opportunities. Try a different quote currency.</p>
       </div>
       <div v-else>
-        <best-arb :perc="perc" :low="low" :high="high"></best-arb>
+        <best-arb
+          v-if="loaded"
+          :perc="perc"
+          :logos="logos"
+          :loEx="loEx"
+          :loLast = "loLast"
+          :hiEx="hiEx"
+          :hiLast = "hiLast"
+        >
+        </best-arb>
       </div>
     </div>
 
@@ -55,9 +69,15 @@ export default {
       quote: '',
       noHits: false,
       prices: [],
-      low: '',
-      high: '',
       perc: '',
+      logos: [],
+      loEx: '',
+      loLast: '',
+      loId: '',
+      hiEx: '',
+      hiLast: '',
+      hiId: '',
+      loaded: false,
       loop: null,
       int: 3000 // will be set by the user
     }
@@ -76,15 +96,15 @@ export default {
   },
   methods: {
     arbCheck() {
-      if (this.loop) { // #clearInterval: same coin, new quote
+      if (this.loop) {
         clearInterval(this.loop);
       }
 
-      this.prices.length = 0; // #prices.length: new coin, new quote
+      this.prices.length = 0;
 
       this.loop = setInterval(() => {
         this.getArb(this.coin, this.quote);
-        console.log(`latest opportunity: ${this.low}, ${this.high}, ${this.perc}`);
+        console.log(`latest opportunity: ${this.loEx}, ${this.hiEx}, ${this.perc}`);
       }, this.int);
     },
     async getCoins() {
@@ -116,10 +136,10 @@ export default {
 
       this.symbols = symbols;
     },
-    resetOutput() {
-      clearInterval(this.loop); // #clearInterval: new coin, new quote
+    resetOutput() { // new coin, populate quote currencies
+      clearInterval(this.loop);
       this.quote = '';
-      this.prices.length = 0; // #prices.length: new coin, no quote yet
+      this.prices.length = 0;
       this.noHits = false;
     },
     async getQuotes() {
@@ -138,8 +158,14 @@ export default {
         }
       });
 
-      // remove duplicate quotes
+      // remove duplicate quote currencies
       this.quotes = quotes.filter((quote, idx, src) => src.indexOf(quote) === idx);
+    },
+    async getLogos(exchange) {
+      let res = await fetch(`https://api.coingecko.com/api/v3/exchanges/${exchange}`);
+      let arrJSON = await res.json();
+
+      this.logos.push(arrJSON.image);
     },
     truncateExchange(exchange) {
       if (exchange.length > 15) {
@@ -147,6 +173,31 @@ export default {
         return words.length > 1 ? words[0] : exchange.slice(0, 15) + '...';
       }
       return exchange;
+    },
+    async getDetails() {
+      let low = this.prices[0];
+      this.loLast = low.last.toFixed(4);
+
+      let high = this.prices[this.prices.length - 1];
+      this.hiLast = high.last.toFixed(4);
+
+
+      if (this.loId !== low.market.identifier || this.hiId !== high.market.identifier) {
+        // helper function
+        this.loaded = false;
+        this.loId = low.market.identifier;
+        this.hiId = high.market.identifier;
+        this.logos = [];
+
+        await this.getLogos(low.market.identifier);
+        await this.getLogos(high.market.identifier);
+      }
+
+      this.perc = `${(((this.hiLast - this.loLast) / this.loLast) * 100).toFixed(4)}%`;
+      this.loEx = this.truncateExchange(low.market.name);
+      this.hiEx = this.truncateExchange(high.market.name);
+
+      this.loaded = true;
     },
     async getArb(coin, quote) {
       let res = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}/tickers?depth=true`);
@@ -161,18 +212,7 @@ export default {
       }
 
       this.noHits = false;
-      let lowP = this.prices[0];
-      let highP = this.prices[this.prices.length - 1];
-
-      let lowEx = this.truncateExchange(lowP.market.name);
-      let lowLast = lowP.last.toFixed(4);
-
-      let highEx = this.truncateExchange(highP.market.name);
-      let highLast = highP.last.toFixed(4);
-
-      this.low = `${lowEx} ${lowLast}`;
-      this.high = `${highEx} ${highLast}`;
-      this.perc = `${(((highLast - lowLast) / lowLast) * 100).toFixed(5)}%`;
+      await this.getDetails();
     }
   }
 }
@@ -180,12 +220,16 @@ export default {
 
 <style>
   #container {
-    min-width: 300px;
-    max-width: 400px;
-
+    width: 320px;
     height: 120px;
 
+    text-align: center;
+
     border: 1px solid gray;
+  }
+  img {
+    max-width: 50%;
+    margin-top: 10px;
   }
   #selects {
     display: flex;
@@ -195,8 +239,5 @@ export default {
   }
   select {
     height: 25px;
-  }
-  #output {
-    text-align: center;
   }
 </style>
