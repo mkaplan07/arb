@@ -1,7 +1,7 @@
 <template>
   <div id="container">
     <div id="selects">
-      <select @change="getQuotes()" v-model="coin">
+      <select @change="getQuotes" v-model="coin">
         <option disabled value="">Choose a coin</option>
         <option
           v-for="coin in coins"
@@ -11,7 +11,7 @@
         </option>
       </select>
 
-      <select @change="arbCheck()" v-model="quote">
+      <select @change="arbCheck" v-model="quote">
         <option disabled value="">Choose a quote currency</option>
         <option
           v-for="quote in quotes"
@@ -23,11 +23,7 @@
     </div>
 
     <div id="output">
-      <div v-if="!coins.length">
-        <!-- https://www.coingecko.com/en/branding -->
-        <img src="../public/gecko.webp" alt="CoinGecko logo">
-      </div>
-      <div v-else-if="coin && !quote">
+      <div v-if="coin && !quote">
         <p>{{ loadQuotes }}</p>
       </div>
       <div v-else-if="coin && quote && !prices.length">
@@ -36,17 +32,12 @@
       <div v-else-if="coin && quote && noHits">
         <p>No opportunities. Try a different quote currency.</p>
       </div>
+      <div v-else-if="coin && quote && prices.length">
+        <best-arb :prices="prices"></best-arb>
+      </div>
       <div v-else>
-        <best-arb
-          v-if="loaded"
-          :perc="perc"
-          :logos="logos"
-          :loEx="loEx"
-          :loLast = "loLast"
-          :hiEx="hiEx"
-          :hiLast = "hiLast"
-        >
-        </best-arb>
+        <!-- https://www.coingecko.com/en/branding -->
+        <img src="../public/gecko.webp" alt="CoinGecko logo">
       </div>
     </div>
 
@@ -69,17 +60,7 @@ export default {
       quote: '',
       noHits: false,
       prices: [],
-      perc: '',
-      logos: [],
-      loEx: '',
-      loLast: '',
-      loId: '',
-      hiEx: '',
-      hiLast: '',
-      hiId: '',
-      loaded: false,
-      loop: null,
-      int: 3000 // will be set by the user
+      loop: null
     }
   },
   mounted() {
@@ -104,8 +85,8 @@ export default {
 
       this.loop = setInterval(() => {
         this.getArb(this.coin, this.quote);
-        console.log(`latest opportunity: ${this.loEx}, ${this.hiEx}, ${this.perc}`);
-      }, this.int);
+        console.log('x');
+      }, 3000);
     },
     async getCoins() {
       let res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
@@ -161,44 +142,6 @@ export default {
       // remove duplicate quote currencies
       this.quotes = quotes.filter((quote, idx, src) => src.indexOf(quote) === idx);
     },
-    async getLogos(exchange) {
-      let res = await fetch(`https://api.coingecko.com/api/v3/exchanges/${exchange}`);
-      let arrJSON = await res.json();
-
-      this.logos.push(arrJSON.image);
-    },
-    truncateExchange(exchange) {
-      if (exchange.length > 15) {
-        let words = exchange.split(' ');
-        return words.length > 1 ? words[0] : exchange.slice(0, 15) + '...';
-      }
-      return exchange;
-    },
-    async getDetails() {
-      let low = this.prices[0];
-      this.loLast = low.last.toFixed(4);
-
-      let high = this.prices[this.prices.length - 1];
-      this.hiLast = high.last.toFixed(4);
-
-
-      if (this.loId !== low.market.identifier || this.hiId !== high.market.identifier) {
-        // helper function
-        this.loaded = false;
-        this.loId = low.market.identifier;
-        this.hiId = high.market.identifier;
-        this.logos = [];
-
-        await this.getLogos(low.market.identifier);
-        await this.getLogos(high.market.identifier);
-      }
-
-      this.perc = `${(((this.hiLast - this.loLast) / this.loLast) * 100).toFixed(4)}%`;
-      this.loEx = this.truncateExchange(low.market.name);
-      this.hiEx = this.truncateExchange(high.market.name);
-
-      this.loaded = true;
-    },
     async getArb(coin, quote) {
       let res = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}/tickers?depth=true`);
       let arrJSON = await res.json();
@@ -212,7 +155,6 @@ export default {
       }
 
       this.noHits = false;
-      await this.getDetails();
     }
   }
 }
