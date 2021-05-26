@@ -69,7 +69,7 @@ export default {
   computed: {
     loadQuotes() {
       if (!this.quotes.length) {
-        return `Waiting for Gecko...`; // waiting for quote currencies to populate
+        return `Waiting for Gecko...`;
       } else {
         return 'Choose a quote currency';
       }
@@ -80,12 +80,11 @@ export default {
       if (this.loop) {
         clearInterval(this.loop);
       }
-
       this.prices.length = 0;
 
       this.loop = setInterval(() => {
-        this.getArb(this.coin, this.quote);
-        console.log('x');
+        this.getPrices(this.coin, this.quote);
+        console.log(this.prices[0].market.identifier, this.prices[this.prices.length - 1].market.identifier);
       }, 3000);
     },
     async getCoins() {
@@ -117,14 +116,14 @@ export default {
 
       this.symbols = symbols;
     },
-    resetOutput() { // new coin, populate quote currencies
+    resetQuotes() {
       clearInterval(this.loop);
       this.quote = '';
       this.prices.length = 0;
       this.noHits = false;
     },
     async getQuotes() {
-      this.resetOutput();
+      this.resetQuotes();
 
       let res = await fetch(`https://api.coingecko.com/api/v3/coins/${this.coin}/tickers`)
       let arrJSON = await res.json();
@@ -139,10 +138,10 @@ export default {
         }
       });
 
-      // remove duplicate quote currencies
+      // remove duplicate currencies
       this.quotes = quotes.filter((quote, idx, src) => src.indexOf(quote) === idx);
     },
-    async getArb(coin, quote) {
+    async getPrices(coin, quote) {
       let res = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}/tickers?depth=true`);
       let arrJSON = await res.json();
 
@@ -171,7 +170,7 @@ export default {
   }
   img {
     max-width: 50%;
-    margin-top: 10px;
+    margin-top: 15px;
   }
   #selects {
     display: flex;

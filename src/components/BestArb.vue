@@ -1,22 +1,25 @@
 <template>
-  <div v-show="loadCmp">
+  <div v-if="loadCmp">
     <p>{{ perc }}</p>
-    <div id="loHi">
-      <div class="details">
-        <img :src="logos[0]" alt="exchange logo" @load="loadImg('loImg')" v-show="loImg">
+    <div id="output">
+      <div class="detail">
+        <img :src="logos[0]" :alt="loEx" @load="loadImg('loImg')" v-show="loImg">
         <div class="text">
           <div>{{ loEx }}</div>
           <div>{{ loLast }}</div>
         </div>
       </div>
-      <div class="details">
-        <img :src="logos[1]" alt="exchange logo" @load="loadImg('hiImg')" v-show="hiImg">
+      <div class="detail">
+        <img :src="logos[1]" :alt="hiEx" @load="loadImg('hiImg')" v-show="hiImg">
         <div class="text">
           <div>{{ hiEx }}</div>
           <div>{{ hiLast }}</div>
         </div>
       </div>
     </div>
+  </div>
+  <div v-else>
+    <p>Loading Arb...</p>
   </div>
 </template>
 
@@ -38,12 +41,18 @@ export default {
       hiImg: false,
     }
   },
-  beforeMount() { // mounted?
-    this.getDetails();
+  watch: {
+    prices() {
+      this.getArb();
+    }
   },
   methods: {
     loadImg(img) {
-      this[img] = true; // https://renatello.com/vue-js-image-loaded/
+      if (img === 'loImg') {
+        this.loImg = true;
+      } else {
+        this.hiImg = true;
+      }
     },
     async getLogos(exchange) {
       let res = await fetch(`https://api.coingecko.com/api/v3/exchanges/${exchange}`);
@@ -58,32 +67,40 @@ export default {
       }
       return exchange;
     },
-    async getDetails() {
+    resetCmp() {
+      this.loadCmp = false;
+
+      this.logos = [];
+      this.loImg = false;
+      this.hiImg = false;
+    },
+    async getDetails(low, high) {
+      this.resetCmp();
+
+      this.loId = low.market.identifier;
+      this.hiId = high.market.identifier;
+
+      await this.getLogos(low.market.identifier);
+      await this.getLogos(high.market.identifier);
+
+      this.perc = `${(((this.hiLast - this.loLast) / this.loLast) * 100).toFixed(4)}%`;
+      this.loEx = this.truncateExchange(low.market.name);
+      this.hiEx = this.truncateExchange(high.market.name);
+    },
+    async getArb() {
       let low = this.prices[0];
       this.loLast = low.last.toFixed(4);
 
       let high = this.prices[this.prices.length - 1];
       this.hiLast = high.last.toFixed(4);
 
+      console.log(low.market.identifier, high.market.identifier);
+
       if (this.loId !== low.market.identifier || this.hiId !== high.market.identifier) {
-        // helper function
-        this.loadCmp = false;
-        this.loImg=this.hiImg=false;
-
-        this.loId = low.market.identifier;
-        this.hiId = high.market.identifier;
-        this.logos = [];
-
-        await this.getLogos(low.market.identifier);
-        await this.getLogos(high.market.identifier);
+        await this.getDetails(low, high);
       }
 
-      this.perc = `${(((this.hiLast - this.loLast) / this.loLast) * 100).toFixed(4)}%`;
-      this.loEx = this.truncateExchange(low.market.name);
-      this.hiEx = this.truncateExchange(high.market.name);
-
       this.loadCmp = true;
-      console.log(`latest: ${this.loEx}, ${this.hiEx}, ${this.perc}`);
     }
   }
 }
@@ -94,28 +111,31 @@ p {
   width: 180px;
   height: 18px;
 
-  margin: 10px auto;
+  margin: 16px auto 0;
 }
-#loHi {
+#output {
   display: flex;
   justify-content: center;
-}
-.details {
-  width: 120px;
-  height: 35px;
 
-  padding: 0 10px;
+  width: 140px;
+  height: 25px;
+
+  margin: 0 auto;
 
   font-size: small;
 }
-.details img {
+.detail {
+  padding: 0 10px;
+}
+img {
   float: left;
   width: 25px;
+  padding: 0 5px 0 5px;
 }
-.details .text {
-  float: right;
-  width: 95px;
+.text {
+  width: 115px;
+  padding-top: 10px;
 
-  padding-top: 5px;
+  font-size: small;
 }
 </style>
