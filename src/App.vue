@@ -22,15 +22,15 @@
       </select>
     </div>
 
-    <div id="output">
+    <div>
       <div v-if="coin && !quote">
         <p>{{ loadQuotes }}</p>
       </div>
       <div v-else-if="coin && quote && !prices.length">
-        <p>Waiting for Gecko...</p>
+        <p>Fetching data...</p>
       </div>
       <div v-else-if="coin && quote && noHits">
-        <p>No opportunities. Try a different quote currency.</p>
+        <p>No results. Try a different quote currency.</p>
       </div>
       <div v-else-if="coin && quote && prices.length">
         <best-arb :prices="prices"></best-arb>
@@ -69,7 +69,7 @@ export default {
   computed: {
     loadQuotes() {
       if (!this.quotes.length) {
-        return `Waiting for Gecko...`;
+        return `Fetching data...`;
       } else {
         return 'Choose a quote currency';
       }
@@ -167,18 +167,31 @@ export default {
     text-align: center;
 
     border: 1px solid gray;
-  }
-  img {
-    max-width: 50%;
-    margin-top: 15px;
+
+    font-size: small;
+    font-family: Helvetica;
   }
   #selects {
+    width: 100%;
+
     display: flex;
     justify-content: space-evenly;
 
     margin-top: 10px;
   }
   select {
+    appearance: none;
+    border: none;
+    outline: none;
+
+    padding: 0 10px 0;
+    
+    background-color: #e7e7e7;
+
     height: 25px;
+  }
+  img {
+    max-width: 50%;
+    margin-top: 15px;
   }
 </style>

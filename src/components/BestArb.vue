@@ -1,6 +1,6 @@
 <template>
   <div v-if="loadCmp">
-    <p>{{ perc }}</p>
+    <p id="perc">{{ perc }}</p>
     <div id="output">
       <div class="detail">
         <img :src="logos[0]" :alt="loEx" @load="loadImg('loImg')" v-show="loImg">
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div v-else>
-    <p>Loading Arb...</p>
+    <p>Loading opportunity...</p>
   </div>
 </template>
 
@@ -107,35 +107,28 @@ export default {
 </script>
 
 <style scoped>
-p {
-  width: 180px;
-  height: 18px;
+  p {
+    width: 100%;
+    margin: 16px auto 0;
+  }
+  #perc {
+    font-size: 16px;
+  }
+  #output {
+    display: flex;
+    justify-content: center;
 
-  margin: 16px auto 0;
-}
-#output {
-  display: flex;
-  justify-content: center;
-
-  width: 140px;
-  height: 25px;
-
-  margin: 0 auto;
-
-  font-size: small;
-}
-.detail {
-  padding: 0 10px;
-}
-img {
-  float: left;
-  width: 25px;
-  padding: 0 5px 0 5px;
-}
-.text {
-  width: 115px;
-  padding-top: 10px;
-
-  font-size: small;
-}
+    width: 100%;
+  }
+  .detail {
+    padding: 0 10px;
+    width: 50%;
+  }
+  img {
+    float: left;
+    width: 25px;
+  }
+  .text {
+    padding: 10px 10px 0 0;
+  }
 </style>
