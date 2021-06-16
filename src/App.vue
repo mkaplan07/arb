@@ -37,7 +37,7 @@
       </div>
       <div v-else>
         <!-- https://www.coingecko.com/en/branding -->
-        <img src="../public/gecko.webp" alt="CoinGecko logo">
+        <img src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo">
       </div>
     </div>
 
