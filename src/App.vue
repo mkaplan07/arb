@@ -84,7 +84,6 @@ export default {
 
       this.loop = setInterval(() => {
         this.getPrices(this.coin, this.quote);
-        console.log(this.prices[0].market.identifier, this.prices[this.prices.length - 1].market.identifier);
       }, 3000);
     },
     async getCoins() {
@@ -148,10 +147,12 @@ export default {
       this.prices = arrJSON.tickers.filter(ticker => ticker.target === quote);
       this.prices.sort((a, b) => a.last - b.last);
 
-      if (this.prices.length < 2) {
+      if (this.prices.length < 2 ||
+        this.prices[0].last.toFixed(4) === this.prices[this.prices.length - 1].last.toFixed(4)) {
         this.noHits = true;
         return;
       }
+      // test .last w/ USDC-ETH
 
       this.noHits = false;
     }
@@ -185,7 +186,7 @@ export default {
     outline: none;
 
     padding: 0 10px 0;
-    
+
     background-color: #e7e7e7;
 
     height: 25px;
