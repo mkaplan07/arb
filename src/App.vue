@@ -165,7 +165,7 @@ export default {
     width: 320px;
     height: 120px;
 
-    background-color: white;
+    background-color: #fff;
 
     text-align: center;
 

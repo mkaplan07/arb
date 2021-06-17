@@ -3,14 +3,16 @@
     <p id="perc">{{ perc }}</p>
     <div id="output">
       <div class="detail">
-        <img :src="logos[0]" :alt="loEx" @load="loadImg('loImg')" v-show="loImg">
+        <!-- <img :src="logos[0]" :alt="loEx" @load="loadImg('loImg')" v-show="loImg"> -->
+        <img :src="logos[0]" :alt="loEx">
         <div class="text">
           <div>{{ loEx }}</div>
           <div>{{ loLast }}</div>
         </div>
       </div>
       <div class="detail">
-        <img :src="logos[1]" :alt="hiEx" @load="loadImg('hiImg')" v-show="hiImg">
+        <!-- <img :src="logos[1]" :alt="hiEx" @load="loadImg('hiImg')" v-show="hiImg"> -->
+        <img :src="logos[1]" :alt="hiEx">
         <div class="text">
           <div>{{ hiEx }}</div>
           <div>{{ hiLast }}</div>
@@ -37,8 +39,8 @@ export default {
       loEx: '',
       hiEx: '',
       loadCmp: false,
-      loImg: false,
-      hiImg: false,
+      // loImg: false,
+      // hiImg: false,
     }
   },
   watch: {
@@ -47,13 +49,13 @@ export default {
     }
   },
   methods: {
-    loadImg(img) {
-      if (img === 'loImg') {
-        this.loImg = true;
-      } else {
-        this.hiImg = true;
-      }
-    },
+    // loadImg(img) {
+    //   if (img === 'loImg') {
+    //     this.loImg = true;
+    //   } else {
+    //     this.hiImg = true;
+    //   }
+    // },
     async getLogos(exchange) {
       let res = await fetch(`https://api.coingecko.com/api/v3/exchanges/${exchange}`);
       let arrJSON = await res.json();
@@ -71,8 +73,8 @@ export default {
       this.loadCmp = false;
 
       this.logos = [];
-      this.loImg = false;
-      this.hiImg = false;
+      // this.loImg = false;
+      // this.hiImg = false;
     },
     async getDetails(low, high) {
       this.resetCmp();
