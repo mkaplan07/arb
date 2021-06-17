@@ -1,11 +1,11 @@
 [[redirects]]
   from = "/js/app.js"
-  to = "/js/app.3f338919.js"
+  to = "/js/app.98dc190f.js"
   status = 301
   force = true
 
 [[redirects]]
   from = "/css/app.css"
-  to = "/css/app.961959b2.css"
+  to = "/css/app.96585e57.css"
   status = 301
   force = true
