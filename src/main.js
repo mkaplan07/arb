@@ -9,4 +9,4 @@ Vue.use(vueCustomElement)
 // new Vue({
 //   render: h => h(App),
 // }).$mount('#app')
-Vue.customElement('vue-widget', App)
+Vue.customElement('arb-widget', App)
