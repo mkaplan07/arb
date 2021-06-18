@@ -1,8 +1,8 @@
-[[redirects]]
-  from = "/js/app.js"
-  to = "/js/app.951abf78.js"
-  status = 301
-  force = true
+# [[redirects]]
+#   from = "/js/app.js"
+#   to = "/js/app.951abf78.js"
+#   status = 301
+#   force = true
 
 # [[redirects]]
 #   from = "/css/app.css"

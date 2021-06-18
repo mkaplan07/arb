@@ -14,15 +14,12 @@
 // }
 
 module.exports = {
+  css: {
+    extract: false,
+  },
   configureWebpack: {
     optimization: {
       splitChunks: false
     }
-  }
-}
-
-module.exports = {
-  css: {
-    extract: false,
   },
 }
