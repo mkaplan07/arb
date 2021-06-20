@@ -1,19 +1,19 @@
 <template>
   <div v-if="loadCmp">
-    <p id="perc">{{ perc }}</p>
-    <div id="output">
-      <div class="detail">
+    <p id="arb-perc">{{ perc }}</p>
+    <div id="arb-output">
+      <div class="arb-detail">
         <!-- <img :src="logos[0]" :alt="loEx" @load="loadImg('loImg')" v-show="loImg"> -->
-        <img :src="logos[0]" :alt="loEx">
-        <div class="text">
+        <img class="arb-logo" :src="logos[0]" :alt="loEx">
+        <div class="arb-text">
           <div>{{ loEx }}</div>
           <div>{{ loLast }}</div>
         </div>
       </div>
-      <div class="detail">
+      <div class="arb-detail">
         <!-- <img :src="logos[1]" :alt="hiEx" @load="loadImg('hiImg')" v-show="hiImg"> -->
-        <img :src="logos[1]" :alt="hiEx">
-        <div class="text">
+        <img class="arb-logo" :src="logos[1]" :alt="hiEx">
+        <div class="arb-text">
           <div>{{ hiEx }}</div>
           <div>{{ hiLast }}</div>
         </div>
@@ -21,7 +21,7 @@
     </div>
   </div>
   <div v-else>
-    <p>Loading opportunity...</p>
+    <p class="arb-p">Loading opportunity...</p>
   </div>
 </template>
 
@@ -109,28 +109,31 @@ export default {
 </script>
 
 <style scoped>
-  p {
-    width: 100%;
-    margin: 16px auto 0;
-  }
-  #perc {
+  #arb-perc {
     font-size: 16px;
+
+    width: 100%;
+    margin-top: 16px;
   }
-  #output {
+  #arb-output {
     display: flex;
     justify-content: center;
 
     width: 100%;
+    margin-top: 10px;
   }
-  .detail {
+  .arb-detail {
+    display: flex;
+    align-items: center;
+
     padding: 0 10px;
     width: 50%;
   }
-  img {
+  .arb-logo {
     float: left;
     width: 25px;
   }
-  .text {
-    padding: 10px 10px 0 0;
+  .arb-text {
+    padding-left: 10px;
   }
 </style>

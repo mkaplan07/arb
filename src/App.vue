@@ -1,6 +1,6 @@
 <template>
-  <div id="container">
-    <div id="selects">
+  <div id="arb-container">
+    <div id="arb-selects">
       <select @change="getQuotes" v-model="coin">
         <option disabled value="">Choose a coin</option>
         <option
@@ -24,20 +24,20 @@
 
     <div>
       <div v-if="coin && !quote">
-        <p>{{ loadQuotes }}</p>
+        <p class="arb-p">{{ loadQuotes }}</p>
       </div>
       <div v-else-if="coin && quote && !prices.length">
-        <p>Fetching data...</p>
+        <p class="arb-p">Fetching data...</p>
       </div>
       <div v-else-if="coin && quote && noHits">
-        <p>No results. Try a different quote currency.</p>
+        <p class="arb-p">No results. Try a different quote currency.</p>
       </div>
       <div v-else-if="coin && quote && prices.length">
         <best-arb :prices="prices"></best-arb>
       </div>
       <div v-else>
         <!-- https://www.coingecko.com/en/branding -->
-        <img src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo">
+        <img id="cglogo" src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo">
       </div>
     </div>
 
@@ -161,7 +161,9 @@ export default {
 </script>
 
 <style>
-  #container {
+  #arb-container {
+    box-sizing: content-box;
+    
     width: 320px;
     height: 120px;
 
@@ -174,7 +176,7 @@ export default {
     font-size: small;
     font-family: Helvetica;
   }
-  #selects {
+  #arb-selects {
     width: 100%;
 
     display: flex;
@@ -182,7 +184,7 @@ export default {
 
     margin-top: 10px;
   }
-  select {
+  #arb-selects select {
     appearance: none;
     border: none;
     outline: none;
@@ -193,7 +195,11 @@ export default {
 
     height: 25px;
   }
-  img {
+  .arb-p {
+    width: 100%;
+    margin-top: 16px;
+  }
+  #cglogo {
     max-width: 50%;
     margin-top: 15px;
   }
