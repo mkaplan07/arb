@@ -9,4 +9,18 @@ Vue.use(vueCustomElement)
 // new Vue({
 //   render: h => h(App),
 // }).$mount('#app')
-Vue.customElement('arb-widget', App)
+
+// Vue.customElement('arb-widget', App)
+Vue.customElement('arb-widget', App, {
+  shadow: true,
+  beforeCreateVueInstance(root) {
+    const rootNode = root.el.getRootNode();
+
+    if (rootNode instanceof ShadowRoot) {
+      root.shadowRoot = rootNode;
+    } else {
+      root.shadowRoot = document.head;
+    }
+    return root;
+  },
+});
