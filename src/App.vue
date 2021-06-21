@@ -168,7 +168,7 @@ export default {
     border: 1px solid gray;
 
     font-size: small;
-    font-family: Helvetica;
+    font-family: monospace;
   }
   #arb-selects {
     width: 100%;
