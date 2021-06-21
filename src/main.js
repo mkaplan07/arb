@@ -8,14 +8,14 @@ Vue.use(vueCustomElement)
 
 Vue.customElement('arb-widget', App, {
   shadow: true,
-  beforeCreateVueInstance(root) {
-    const rootNode = root.el.getRootNode();
-
-    if (rootNode instanceof ShadowRoot) {
-      root.shadowRoot = rootNode;
-    } else {
-      root.shadowRoot = document.head;
-    }
-    return root;
-  }
+  // beforeCreateVueInstance(root) {
+  //   const rootNode = root.el.getRootNode();
+  //
+  //   if (rootNode instanceof ShadowRoot) {
+  //     root.shadowRoot = rootNode;
+  //   } else {
+  //     root.shadowRoot = document.head;
+  //   }
+  //   return root;
+  // }
 })
