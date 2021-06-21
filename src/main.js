@@ -6,11 +6,6 @@ Vue.config.productionTip = false
 import vueCustomElement from 'vue-custom-element'
 Vue.use(vueCustomElement)
 
-// new Vue({
-//   render: h => h(App),
-// }).$mount('#app')
-
-// Vue.customElement('arb-widget', App)
 Vue.customElement('arb-widget', App, {
   shadow: true,
   beforeCreateVueInstance(root) {
@@ -22,5 +17,5 @@ Vue.customElement('arb-widget', App, {
       root.shadowRoot = document.head;
     }
     return root;
-  },
-});
+  }
+})
