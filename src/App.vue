@@ -163,6 +163,7 @@ export default {
     background-color: #fff;
 
     text-align: center;
+    line-height: 1;
 
     border: 1px solid gray;
 
