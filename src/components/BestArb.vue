@@ -5,7 +5,7 @@
       <div class="arb-detail">
         <!-- <img :src="logos[0]" :alt="loEx" @load="loadImg('loImg')" v-show="loImg"> -->
         <img class="arb-logo" :src="logos[0]" :alt="loEx">
-        <div class="arb-text">
+        <div>
           <div>{{ loEx }}</div>
           <div>{{ loLast }}</div>
         </div>
@@ -13,7 +13,7 @@
       <div class="arb-detail">
         <!-- <img :src="logos[1]" :alt="hiEx" @load="loadImg('hiImg')" v-show="hiImg"> -->
         <img class="arb-logo" :src="logos[1]" :alt="hiEx">
-        <div class="arb-text">
+        <div>
           <div>{{ hiEx }}</div>
           <div>{{ hiLast }}</div>
         </div>
@@ -130,10 +130,7 @@ export default {
     width: 50%;
   }
   .arb-logo {
-    float: left;
     width: 25px;
-  }
-  .arb-text {
-    padding-left: 10px;
+    padding-right: 10px;
   }
 </style>

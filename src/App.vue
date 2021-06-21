@@ -22,25 +22,19 @@
       </select>
     </div>
 
-    <div>
-      <div v-if="coin && !quote">
-        <p class="arb-p">{{ loadQuotes }}</p>
-      </div>
-      <div v-else-if="coin && quote && !prices.length">
-        <p class="arb-p">Fetching data...</p>
-      </div>
-      <div v-else-if="coin && quote && noHits">
-        <p class="arb-p">No results. Try a different quote currency.</p>
-      </div>
-      <div v-else-if="coin && quote && prices.length">
-        <best-arb :prices="prices"></best-arb>
-      </div>
-      <div v-else>
-        <!-- https://www.coingecko.com/en/branding -->
-        <img id="cglogo" src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo">
-      </div>
+    <div v-if="coin && !quote">
+      <p class="arb-p">{{ loadQuotes }}</p>
     </div>
-
+    <div v-else-if="coin && quote && !prices.length">
+      <p class="arb-p">Fetching data...</p>
+    </div>
+    <div v-else-if="coin && quote && noHits">
+      <p class="arb-p">No results. Try a different quote currency.</p>
+    </div>
+    <best-arb v-else-if="coin && quote && prices.length" :prices="prices"></best-arb>
+    <div v-else>
+      <img id="cglogo" src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo">
+    </div>
   </div>
 </template>
 
@@ -152,7 +146,6 @@ export default {
         this.noHits = true;
         return;
       }
-      // test .last w/ USDC-ETH
 
       this.noHits = false;
     }
@@ -163,7 +156,7 @@ export default {
 <style>
   #arb-container {
     box-sizing: content-box;
-    
+
     width: 320px;
     height: 120px;
 
