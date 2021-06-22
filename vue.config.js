@@ -8,7 +8,7 @@ function enableShadowCss(config) {
     config.module.rule('css').oneOf('normal-modules').use('vue-style-loader'),
     config.module.rule('css').oneOf('normal').use('vue-style-loader')
   ];
-  configs.forEach((c) => c.tap((options) => {
+  configs.forEach(c => c.tap(options => {
     options.shadowMode = true;
     return options;
   }));
