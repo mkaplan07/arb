@@ -1,7 +1,7 @@
 <template>
   <div id="arb-container">
     <div id="arb-selects">
-      <select @change="getQuotes" v-model="coin">
+      <select @change="getSymbols" v-model="coin">
         <option disabled value="">Choose a coin</option>
         <option
           v-for="coin in coins"
@@ -22,7 +22,11 @@
       </select>
     </div>
 
-    <div v-if="coin && !quote">
+    <div v-if="error">
+      <err-cmp :error="error"></err-cmp>
+      <button type="button" @click="reload">Restart</button>
+    </div>
+    <div v-else-if="coin && !quote">
       <p class="arb-p">{{ loadQuotes }}</p>
     </div>
     <div v-else-if="coin && quote && !prices.length">
@@ -31,11 +35,7 @@
     <div v-else-if="coin && quote && noHits">
       <p class="arb-p">No results. Try a different quote currency.</p>
     </div>
-    <best-arb v-else-if="coin && quote && prices.length" :prices="prices"></best-arb>
-    <div v-else-if="error">
-      <err-cmp></err-cmp>
-      <button v-if="error" type="button" @click="reload">Restart</button>
-    </div>
+    <best-arb v-else-if="coin && quote && prices.length" :prices="prices" @failedReq="setError"></best-arb>
     <div v-else>
       <img id="cglogo" src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo">
     </div>
@@ -55,7 +55,6 @@ export default {
     return {
       coins: [],
       coin: '',
-      symbols: [],
       quotes: [],
       quote: '',
       noHits: false,
@@ -65,9 +64,7 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.getCoins();
-    }, 2000);
+    this.getCoins();
   },
   computed: {
     loadQuotes() {
@@ -79,9 +76,6 @@ export default {
     }
   },
   methods: {
-    reload() {
-      this.getCoins2();
-    },
     arbCheck() {
       if (this.loop) {
         clearInterval(this.loop);
@@ -92,60 +86,43 @@ export default {
         this.getPrices(this.coin, this.quote);
       }, 3000);
     },
-    getCoins() {
-      fetch('https://api.coingecko.com/ape/v3/coins/markets?vs_currency=usd')
-        .then(async res => {
-          let arrJSON = await res.json();
-          let arrVals = [];
-          arrJSON.forEach(obj => {
-            arrVals.push([obj.id, obj.market_cap]);
-          });
+    async getCoins() {
+      try {
+        let res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
+        let arrJSON = await res.json();
 
-          arrVals.sort((a, b) => b[1] - a[1]);
-
-          let coins = [];
-          arrVals.slice(0, 20).forEach(arr => coins.push(arr[0]));
-
-          this.coins = coins;
-        })
-        .catch(() => {
-          this.error = true;
+        let arrVals = [];
+        arrJSON.forEach(obj => {
+          arrVals.push([obj.id, obj.market_cap]);
         });
-    },
-    getCoins2() {
-      this.error = false;
 
-      fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd')
-        .then(async res => {
-          let arrJSON = await res.json();
-          let arrVals = [];
-          arrJSON.forEach(obj => {
-            arrVals.push([obj.id, obj.market_cap]);
-          });
+        arrVals.sort((a, b) => b[1] - a[1]);
 
-          arrVals.sort((a, b) => b[1] - a[1]);
+        let coins = [];
+        arrVals.slice(0, 20).forEach(arr => coins.push(arr[0]));
 
-          let coins = [];
-          arrVals.slice(0, 20).forEach(arr => coins.push(arr[0]));
-
-          this.coins = coins;
-        })
-        .catch(() => {
-          this.error = true;
-        });
+        this.coins = coins;
+      } catch {
+        this.error = true;
+      }
     },
     async getSymbols() {
-      let res = await fetch('https://api.coingecko.com/api/v3/coins/list');
-      let arrJSON = await res.json();
+      try {
+        let res = await fetch('https://api.coingecko.com/api/v3/coins/list');
+        let arrJSON = await res.json();
 
-      let symbols = [];
-      arrJSON.forEach(obj => {
-        if (this.coins.includes(obj.id)) {
-          symbols.push([obj.id, obj.symbol]);
-        }
-      });
+        let symbols = [];
+        arrJSON.forEach(obj => {
+          if (this.coins.includes(obj.id)) {
+            symbols.push([obj.id, obj.symbol]); // [bitcoin, btc] for each coin
+          }
+        });
 
-      this.symbols = symbols;
+        let base = symbols.find(sub => sub[0] === this.coin)[1].toUpperCase();
+        this.getQuotes(base);
+      } catch {
+        this.error = true;
+      }
     },
     resetQuotes() {
       clearInterval(this.loop);
@@ -153,39 +130,50 @@ export default {
       this.prices.length = 0;
       this.noHits = false;
     },
-    async getQuotes() {
-      this.resetQuotes();
+    async getQuotes(base) {
+      try {
+        this.resetQuotes();
 
-      let res = await fetch(`https://api.coingecko.com/api/v3/coins/${this.coin}/tickers`)
-      let arrJSON = await res.json();
+        let res = await fetch(`https://api.coingecko.com/api/v3/coins/${this.coin}/tickers`);
+        let arrJSON = await res.json();
 
-      await this.getSymbols(); // [bitcoin, btc] for each coin
-      let base = this.symbols.find(sub => sub[0] === this.coin)[1].toUpperCase();
+        let quotes = [];
+        arrJSON.tickers.forEach(obj => {
+          if (obj.base === base) { // base is BTC, not WBTC
+            quotes.push(obj.target);
+          }
+        });
 
-      let quotes = [];
-      arrJSON.tickers.forEach(obj => {
-        if (obj.base === base) { // base is BTC, not WBTC
-          quotes.push(obj.target);
-        }
-      });
-
-      // remove duplicate currencies
-      this.quotes = quotes.filter((quote, idx, src) => src.indexOf(quote) === idx);
+        // remove duplicate currencies
+        this.quotes = quotes.filter((quote, idx, src) => src.indexOf(quote) === idx);
+      } catch {
+        this.error = true;
+      }
     },
     async getPrices(coin, quote) {
-      let res = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}/tickers?depth=true`);
-      let arrJSON = await res.json();
+      try {
+        let res = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}/tickers?depth=true`);
+        let arrJSON = await res.json();
 
-      this.prices = arrJSON.tickers.filter(ticker => ticker.target === quote);
-      this.prices.sort((a, b) => a.last - b.last);
+        this.prices = arrJSON.tickers.filter(ticker => ticker.target === quote);
+        this.prices.sort((a, b) => a.last - b.last);
 
-      if (this.prices.length < 2 ||
-        this.prices[0].last.toFixed(4) === this.prices[this.prices.length - 1].last.toFixed(4)) {
-        this.noHits = true;
-        return;
+        if (this.prices.length < 2 ||
+          this.prices[0].last.toFixed(4) === this.prices[this.prices.length - 1].last.toFixed(4)) {
+          this.noHits = true;
+          return;
+        }
+
+        this.noHits = false;
+      } catch {
+        this.error = true;
       }
-
-      this.noHits = false;
+    },
+    setError() {
+      this.error = true;
+    },
+    reload() {
+      console.log('End of test.');
     }
   }
 }

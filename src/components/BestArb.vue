@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  props: ['prices'],
+  props: ['prices', 'error'],
   data() {
     return {
       perc: '',
@@ -57,10 +57,14 @@ export default {
     //   }
     // },
     async getLogos(exchange) {
-      let res = await fetch(`https://api.coingecko.com/api/v3/exchanges/${exchange}`);
-      let arrJSON = await res.json();
+      try {
+        let res = await fetch(`https://api.coingecko.com/api/v3/exchanges/${exchange}`);
+        let arrJSON = await res.json();
 
-      this.logos.push(arrJSON.image);
+        this.logos.push(arrJSON.image);
+      } catch {
+        this.$emit('failedReq');
+      }
     },
     truncateExchange(exchange) {
       if (exchange.length > 15) {
