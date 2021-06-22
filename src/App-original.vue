@@ -32,10 +32,6 @@
       <p class="arb-p">No results. Try a different quote currency.</p>
     </div>
     <best-arb v-else-if="coin && quote && prices.length" :prices="prices"></best-arb>
-    <div v-else-if="error">
-      <err-cmp></err-cmp>
-      <button v-if="error" type="button" @click="reload">Restart</button>
-    </div>
     <div v-else>
       <img id="cglogo" src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo">
     </div>
@@ -43,13 +39,11 @@
 </template>
 
 <script>
-import BestArb from './components/BestArb.vue';
-import ErrCmp from './components/ErrCmp.vue';
+import BestArb from './components/BestArb.vue'
 
 export default {
   components: {
-    BestArb,
-    ErrCmp
+    BestArb
   },
   data() {
     return {
@@ -60,14 +54,11 @@ export default {
       quote: '',
       noHits: false,
       prices: [],
-      loop: null,
-      error: false
+      loop: null
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.getCoins();
-    }, 2000);
+    this.getCoins();
   },
   computed: {
     loadQuotes() {
@@ -79,9 +70,6 @@ export default {
     }
   },
   methods: {
-    reload() {
-      this.getCoins2();
-    },
     arbCheck() {
       if (this.loop) {
         clearInterval(this.loop);
@@ -92,47 +80,21 @@ export default {
         this.getPrices(this.coin, this.quote);
       }, 3000);
     },
-    getCoins() {
-      fetch('https://api.coingecko.com/ape/v3/coins/markets?vs_currency=usd')
-        .then(async res => {
-          let arrJSON = await res.json();
-          let arrVals = [];
-          arrJSON.forEach(obj => {
-            arrVals.push([obj.id, obj.market_cap]);
-          });
+    async getCoins() {
+      let res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
+      let arrJSON = await res.json();
 
-          arrVals.sort((a, b) => b[1] - a[1]);
+      let arrVals = [];
+      arrJSON.forEach(obj => {
+        arrVals.push([obj.id, obj.market_cap]);
+      });
 
-          let coins = [];
-          arrVals.slice(0, 20).forEach(arr => coins.push(arr[0]));
+      arrVals.sort((a, b) => b[1] - a[1]);
 
-          this.coins = coins;
-        })
-        .catch(() => {
-          this.error = true;
-        });
-    },
-    getCoins2() {
-      this.error = false;
+      let coins = [];
+      arrVals.slice(0, 20).forEach(arr => coins.push(arr[0]));
 
-      fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd')
-        .then(async res => {
-          let arrJSON = await res.json();
-          let arrVals = [];
-          arrJSON.forEach(obj => {
-            arrVals.push([obj.id, obj.market_cap]);
-          });
-
-          arrVals.sort((a, b) => b[1] - a[1]);
-
-          let coins = [];
-          arrVals.slice(0, 20).forEach(arr => coins.push(arr[0]));
-
-          this.coins = coins;
-        })
-        .catch(() => {
-          this.error = true;
-        });
+      this.coins = coins;
     },
     async getSymbols() {
       let res = await fetch('https://api.coingecko.com/api/v3/coins/list');
