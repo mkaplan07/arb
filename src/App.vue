@@ -22,10 +22,7 @@
       </select>
     </div>
 
-    <div v-if="error">
-      <err-cmp :error="error"></err-cmp>
-      <button type="button" @click="reload">Restart</button>
-    </div>
+    <err-cmp v-if="error"></err-cmp>
     <div v-else-if="coin && !quote">
       <p class="arb-p">{{ loadQuotes }}</p>
     </div>
@@ -35,7 +32,12 @@
     <div v-else-if="coin && quote && noHits">
       <p class="arb-p">No results. Try a different quote currency.</p>
     </div>
-    <best-arb v-else-if="coin && quote && prices.length" :prices="prices" @failedReq="setError"></best-arb>
+    <best-arb
+      v-else-if="coin && quote && prices.length"
+      :prices="prices"
+      @failedReq="setError"
+    >
+    </best-arb>
     <div v-else>
       <img id="cglogo" src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo">
     </div>
@@ -83,6 +85,7 @@ export default {
       this.prices.length = 0;
 
       this.loop = setInterval(() => {
+        // if (this.error) ?
         this.getPrices(this.coin, this.quote);
       }, 3000);
     },
@@ -171,9 +174,6 @@ export default {
     },
     setError() {
       this.error = true;
-    },
-    reload() {
-      console.log('End of test.');
     }
   }
 }
