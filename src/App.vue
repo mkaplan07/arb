@@ -82,10 +82,8 @@ export default {
       if (this.loop) {
         clearInterval(this.loop);
       }
-      this.prices.length = 0;
 
       this.loop = setInterval(() => {
-        // if (this.error) ?
         this.getPrices(this.coin, this.quote);
       }, 3000);
     },
@@ -106,7 +104,7 @@ export default {
 
         this.coins = coins;
       } catch {
-        this.error = true;
+        this.setError();
       }
     },
     async getSymbols() {
@@ -124,7 +122,7 @@ export default {
         let base = symbols.find(sub => sub[0] === this.coin)[1].toUpperCase();
         this.getQuotes(base);
       } catch {
-        this.error = true;
+        this.setError();
       }
     },
     resetQuotes() {
@@ -150,7 +148,7 @@ export default {
         // remove duplicate currencies
         this.quotes = quotes.filter((quote, idx, src) => src.indexOf(quote) === idx);
       } catch {
-        this.error = true;
+        this.setError();
       }
     },
     async getPrices(coin, quote) {
@@ -169,10 +167,13 @@ export default {
 
         this.noHits = false;
       } catch {
-        this.error = true;
+        this.setError();
+        clearInterval(this.loop);
       }
     },
     setError() {
+      this.coins = [];
+      this.quotes = [];
       this.error = true;
     }
   }
