@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  props: ['prices', 'error'],
+  props: ['prices'],
   data() {
     return {
       perc: '',
@@ -82,22 +82,19 @@ export default {
 
       this.loId = low.market.identifier;
       this.hiId = high.market.identifier;
+      await this.getLogos(this.loId);
+      await this.getLogos(this.hiId);
 
-      await this.getLogos(low.market.identifier);
-      await this.getLogos(high.market.identifier);
-
+      this.loLast = low.last.toFixed(4);
+      this.hiLast = high.last.toFixed(4);
       this.perc = `${(((this.hiLast - this.loLast) / this.loLast) * 100).toFixed(4)}%`;
+      
       this.loEx = this.truncateExchange(low.market.name);
       this.hiEx = this.truncateExchange(high.market.name);
     },
     async getArb() {
-      this.showInfo = 0;
-
       let low = this.prices[0];
-      this.loLast = low.last.toFixed(4);
-
       let high = this.prices[this.prices.length - 1];
-      this.hiLast = high.last.toFixed(4);
 
       console.log(low.market.identifier, high.market.identifier);
 
