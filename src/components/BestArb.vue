@@ -1,18 +1,16 @@
 <template>
   <div v-if="loadCmp">
     <p id="arb-perc">{{ perc }}</p>
-    <div id="arb-output">
+    <div id="arb-output" v-show="loImg && hiImg">
       <div class="arb-detail">
-        <!-- <img :src="logos[0]" :alt="loEx" @load="loadImg('loImg')" v-show="loImg"> -->
-        <img class="arb-logo" :src="logos[0]" :alt="loEx">
+        <img class="arb-logo" :src="logos[0]" :alt="loEx" @load="loadImg('lo')">
         <div>
           <div>{{ loEx }}</div>
           <div>{{ loLast }}</div>
         </div>
       </div>
       <div class="arb-detail">
-        <!-- <img :src="logos[1]" :alt="hiEx" @load="loadImg('hiImg')" v-show="hiImg"> -->
-        <img class="arb-logo" :src="logos[1]" :alt="hiEx">
+        <img class="arb-logo" :src="logos[1]" :alt="hiEx" @load="loadImg('hi')">
         <div>
           <div>{{ hiEx }}</div>
           <div>{{ hiLast }}</div>
@@ -39,8 +37,8 @@ export default {
       loEx: '',
       hiEx: '',
       loadCmp: false,
-      // loImg: false,
-      // hiImg: false,
+      loImg: false,
+      hiImg: false
     }
   },
   watch: {
@@ -49,13 +47,13 @@ export default {
     }
   },
   methods: {
-    // loadImg(img) {
-    //   if (img === 'loImg') {
-    //     this.loImg = true;
-    //   } else {
-    //     this.hiImg = true;
-    //   }
-    // },
+    loadImg(img) {
+      if (img === 'lo') {
+        this.loImg = true;
+      } else {
+        this.hiImg = true;
+      }
+    },
     async getLogos(exchange) {
       try {
         let res = await fetch(`https://api.coingecko.com/api/v3/exchanges/${exchange}`);
@@ -74,11 +72,10 @@ export default {
       return exchange;
     },
     resetCmp() {
-      this.loadCmp = false;
-
       this.logos = [];
-      // this.loImg = false;
-      // this.hiImg = false;
+      this.loadCmp = false;
+      this.loImg = false;
+      this.hiImg = false;
     },
     async getDetails(low, high) {
       this.resetCmp();
@@ -94,6 +91,8 @@ export default {
       this.hiEx = this.truncateExchange(high.market.name);
     },
     async getArb() {
+      this.showInfo = 0;
+
       let low = this.prices[0];
       this.loLast = low.last.toFixed(4);
 

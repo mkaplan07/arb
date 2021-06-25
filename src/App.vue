@@ -71,7 +71,7 @@ export default {
   computed: {
     loadQuotes() {
       if (!this.quotes.length) {
-        return `Fetching data...`;
+        return 'Fetching data...';
       } else {
         return 'Choose a quote currency';
       }
@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     arbCheck() {
-      this.prices.length = 0; // for if-else 
+      this.prices.length = 0; // for if-else
 
       if (this.loop) {
         clearInterval(this.loop);
