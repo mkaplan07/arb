@@ -10,7 +10,7 @@
 export default {
   methods: {
     reload() {
-      console.log('End of test.');
+      this.$emit('reload');
     }
   }
 }

@@ -22,7 +22,7 @@
       </select>
     </div>
 
-    <err-cmp v-if="error"></err-cmp>
+    <err-cmp v-if="error" @reload="getCoins"></err-cmp>
     <div v-else-if="coin && !quote">
       <p class="arb-p">{{ loadQuotes }}</p>
     </div>
@@ -59,10 +59,10 @@ export default {
       coin: '',
       quotes: [],
       quote: '',
-      noHits: false,
       prices: [],
+      noHits: false,
       loop: null,
-      error: false
+      error: null
     }
   },
   mounted() {
@@ -79,15 +79,18 @@ export default {
   },
   methods: {
     arbCheck() {
+      this.prices.length = 0; // for if-else 
+
       if (this.loop) {
         clearInterval(this.loop);
       }
 
       this.loop = setInterval(() => {
         this.getPrices(this.coin, this.quote);
-      }, 3000);
+      }, 2000);
     },
     async getCoins() {
+      this.error = false;
       try {
         let res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
         let arrJSON = await res.json();
@@ -132,9 +135,8 @@ export default {
       this.noHits = false;
     },
     async getQuotes(base) {
+      this.resetQuotes();
       try {
-        this.resetQuotes();
-
         let res = await fetch(`https://api.coingecko.com/api/v3/coins/${this.coin}/tickers`);
         let arrJSON = await res.json();
 
@@ -168,13 +170,14 @@ export default {
         this.noHits = false;
       } catch {
         this.setError();
-        clearInterval(this.loop);
       }
     },
     setError() {
+      this.error = true;
+      this.coin = ''
       this.coins = [];
       this.quotes = [];
-      this.error = true;
+      this.resetQuotes();
     }
   }
 }
