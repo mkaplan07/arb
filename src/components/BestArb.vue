@@ -30,12 +30,12 @@ export default {
     return {
       perc: '',
       logos: [],
-      loLast: '',
-      hiLast: '',
       loId: '',
       hiId: '',
       loEx: '',
       hiEx: '',
+      loLast: '',
+      hiLast: '',
       loadCmp: false,
       loImg: false,
       hiImg: false
@@ -88,7 +88,7 @@ export default {
       this.loLast = low.last.toFixed(4);
       this.hiLast = high.last.toFixed(4);
       this.perc = `${(((this.hiLast - this.loLast) / this.loLast) * 100).toFixed(4)}%`;
-      
+
       this.loEx = this.truncateExchange(low.market.name);
       this.hiEx = this.truncateExchange(high.market.name);
     },
