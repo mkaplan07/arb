@@ -38,9 +38,8 @@
       @failedReq="setError"
     >
     </best-arb>
-    <div v-else>
-      <!-- <img id="cglogo" src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo"> -->
-      <img id="cglogo" src="./assets/cg-logo.png" alt="CoinGecko logo">
+    <div v-else v-show="okLogo">
+      <img id="cglogo" src="./assets/cg-logo.png" alt="CoinGecko logo" @load="loadLogo">
     </div>
   </div>
 </template>
@@ -63,7 +62,8 @@ export default {
       prices: [],
       noHits: false,
       loop: null,
-      error: null
+      error: null,
+      okLogo: false
     }
   },
   mounted() {
@@ -179,6 +179,9 @@ export default {
       this.coins = [];
       this.quotes = [];
       this.resetQuotes();
+    },
+    loadLogo() {
+      this.okLogo = true;
     }
   }
 }
