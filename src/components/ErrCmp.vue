@@ -21,4 +21,11 @@ export default {
     line-height: 1.2;
     margin: 10px auto;
   }
+  button {
+    background-color: #bedf90; /* #8dc73d */
+    border: none;
+    padding: 4px 8px;
+
+    font-style: italic;
+  }
 </style>
