@@ -91,7 +91,6 @@ export default {
       }, 2000);
     },
     async getCoins() {
-      this.error = false;
       try {
         let res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
         let arrJSON = await res.json();
@@ -107,6 +106,7 @@ export default {
         arrVals.slice(0, 20).forEach(arr => coins.push(arr[0]));
 
         this.coins = coins;
+        this.error = false;
       } catch {
         this.setError();
       }
@@ -195,16 +195,16 @@ export default {
     min-width: 320px;
     height: 120px;
 
-    background-color: #fff;
+    background: linear-gradient(90deg, rgba(2,0,36,.1) 0%, rgba(190,223,144,.1) 0%, rgba(0,212,255,.1) 100%);
 
     text-align: center;
     line-height: 1;
 
-    border: 1px solid gray;
+    border: 1px solid #c7c7c7;
 
     font-size: small;
     font-family: Helvetica;
-    color: #555;
+    color: #333;
   }
   #arb-selects {
     width: 100%;
@@ -216,12 +216,10 @@ export default {
   }
   #arb-selects select {
     appearance: none;
-    border: none;
+    border: 1px solid #c7c7c7;
     outline: none;
 
     padding: 0 10px 0;
-
-    background-color: #e7e7e7;
 
     height: 25px;
   }
