@@ -106,7 +106,7 @@ export default {
         arrVals.slice(0, 20).forEach(arr => coins.push(arr[0]));
 
         this.coins = coins;
-        this.error = false;
+        this.error = false; // else flickering
       } catch {
         this.setError();
       }
@@ -204,7 +204,7 @@ export default {
 
     font-size: small;
     font-family: Helvetica;
-    color: #333;
+    color: #222;
   }
   #arb-selects {
     width: 100%;
@@ -229,5 +229,14 @@ export default {
   #cglogo {
     max-width: 50%;
     margin-top: 15px;
+    animation: fadein 1s;
+
+    /* https://stackoverflow.com/questions/31573142/jump-at-end-of-css-transition */
+    -webkit-backface-visibility: hidden;
+  }
+
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 </style>

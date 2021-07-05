@@ -22,10 +22,14 @@ export default {
     margin: 10px auto;
   }
   button {
-    background-color: #bedf90; /* #8dc73d */
-    border: none;
+    border: 1px solid #c7c7c7;
     padding: 4px 8px;
-
-    font-style: italic;
+    transition: background-color 0.1s linear;
+  }
+  button:hover {
+    background-color: #bedf90; /* #8dc73d */
+  }
+  button:active {
+    border: 1px solid #fff;
   }
 </style>
