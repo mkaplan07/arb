@@ -232,7 +232,7 @@ export default {
     animation: fadein 1s;
 
     /* https://stackoverflow.com/questions/31573142/jump-at-end-of-css-transition */
-    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 
   @keyframes fadein {
