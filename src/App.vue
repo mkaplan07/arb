@@ -191,7 +191,8 @@ export default {
   #arb-container {
     box-sizing: content-box;
 
-    width: 320px;
+    max-width: 400px;
+    min-width: 320px;
     height: 120px;
 
     background-color: #fff;
@@ -225,7 +226,6 @@ export default {
     height: 25px;
   }
   .arb-p {
-    width: 100%;
     margin-top: 16px;
   }
   #cglogo {

@@ -111,20 +111,15 @@ export default {
 <style scoped>
   #arb-perc {
     font-size: 16px;
-
-    width: 100%;
-    margin-top: 16px;
   }
   #arb-output {
     display: flex;
-    justify-content: center;
+    max-width: 320px;
 
-    width: 100%;
-    margin-top: 10px;
+    margin: 10px auto;
   }
   .arb-detail {
     display: flex;
-    align-items: center;
 
     padding: 0 10px;
     width: 50%;
