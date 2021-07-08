@@ -23,11 +23,17 @@
     </div>
 
     <err-cmp v-if="error" @reload="getCoins"></err-cmp>
-    <div v-else-if="coin && !quote">
+    <!-- <div v-else-if="coin && !quote">
       <p class="arb-p">{{ loadQuotes }}</p>
+    </div> -->
+    <div v-else-if="coin && !this.quotes.length">
+      <p class="arb-p">Fetching quote currencies<span class="e1">.</span><span class="e2">.</span><span class="e3">.</span></p>
+    </div>
+    <div v-else-if="coin && !quote">
+      <p class="arb-p">Choose a quote currency</p>
     </div>
     <div v-else-if="coin && quote && !prices.length">
-      <p class="arb-p">Fetching data...</p>
+      <p class="arb-p">Fetching data<span class="e1">.</span><span class="e2">.</span><span class="e3">.</span></p>
     </div>
     <div v-else-if="coin && quote && noHits">
       <p class="arb-p">No results. Try a different quote currency.</p>
@@ -69,15 +75,15 @@ export default {
   mounted() {
     this.getCoins();
   },
-  computed: {
-    loadQuotes() {
-      if (!this.quotes.length) {
-        return 'Fetching data...';
-      } else {
-        return 'Choose a quote currency';
-      }
-    }
-  },
+  // computed: {
+  //   loadQuotes() {
+  //     if (!this.quotes.length) {
+  //       return 'Fetching data...';
+  //     } else {
+  //       return 'Choose a quote currency';
+  //     }
+  //   }
+  // },
   methods: {
     arbCheck() {
       this.prices.length = 0; // for if-else
@@ -226,6 +232,69 @@ export default {
   .arb-p {
     margin-top: 16px;
   }
+  .e1 {
+    animation: e1 2s linear infinite;
+  }
+  .e2 {
+    animation: e2 2s linear infinite;
+  }
+  .e3 {
+    animation: e3 2s linear infinite;
+  }
+  @keyframes e1 {
+    0% {
+      opacity: 1;
+    }
+    65% {
+      opacity: 1;
+    }
+    66% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes e2 {
+    0% {
+      opacity: 0;
+    }
+    21% {
+      opacity: 0;
+    }
+    22% {
+      opacity: 1;
+    }
+    65% {
+      opacity: 1;
+    }
+    66% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes e3 {
+    0% {
+      opacity: 0;
+    }
+    43% {
+      opacity: 0;
+    }
+    44% {
+      opacity: 1;
+    }
+    65% {
+      opacity: 1;
+    }
+    66% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
   #cglogo {
     max-width: 50%;
     margin-top: 15px;
@@ -234,7 +303,6 @@ export default {
     /* https://stackoverflow.com/questions/31573142/jump-at-end-of-css-transition */
     backface-visibility: hidden;
   }
-
   @keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
