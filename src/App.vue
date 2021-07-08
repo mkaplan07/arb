@@ -120,7 +120,15 @@ export default {
         this.setError();
       }
     },
+    resetQuotes() {
+      clearInterval(this.loop);
+      this.quotes = [];
+      this.quote = '';
+      this.prices = [];
+      this.noHits = false;
+    },
     async getSymbols() {
+      this.resetQuotes();
       try {
         let res = await fetch('https://api.coingecko.com/api/v3/coins/list');
         let arrJSON = await res.json();
@@ -138,27 +146,19 @@ export default {
         this.setError();
       }
     },
-    resetQuotes() {
-      clearInterval(this.loop);
-      this.quote = '';
-      this.prices.length = 0;
-      this.noHits = false;
-    },
     async getQuotes(base) {
-      this.resetQuotes();
       try {
         let res = await fetch(`https://api.coingecko.com/api/v3/coins/${this.coin}/tickers`);
         let arrJSON = await res.json();
 
-        let quotes = [];
         arrJSON.tickers.forEach(obj => {
           if (obj.base === base) { // base is BTC, not WBTC
-            quotes.push(obj.target);
+            this.quotes.push(obj.target);
           }
         });
 
         // remove duplicate currencies
-        this.quotes = quotes.filter((quote, idx, src) => src.indexOf(quote) === idx);
+        this.quotes = this.quotes.filter((quote, idx, src) => src.indexOf(quote) === idx);
       } catch {
         this.setError();
       }
@@ -184,9 +184,9 @@ export default {
     },
     setError() {
       this.error = true;
-      this.coin = ''
       this.coins = [];
-      this.quotes = [];
+      this.coin = ''
+
       this.resetQuotes();
     },
     loadLogo() {
@@ -307,7 +307,7 @@ export default {
   }
   @keyframes dropin {
     0% {
-      transform: translateY(-20px);
+      transform: translateY(-5px);
     }
     100% {
       transform: translateY(0);
@@ -315,7 +315,7 @@ export default {
   }
   #logo img {
     max-width: 33%;
-    animation: fadein 0.75s;
+    animation: fadein 1s;
 
     /* https://stackoverflow.com/questions/31573142/jump-at-end-of-css-transition */
     backface-visibility: hidden;
