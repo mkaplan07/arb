@@ -32,14 +32,14 @@
     <div v-else-if="coin && !quote">
       <p class="arb-p">Choose a quote currency</p>
     </div>
-    <div v-else-if="coin && quote && !prices.length">
-      <p class="arb-p">Fetching data<span class="e1">.</span><span class="e2">.</span><span class="e3">.</span></p>
+    <div v-else-if="coin && !prices.length">
+      <p class="arb-p">Fetching price data<span class="e1">.</span><span class="e2">.</span><span class="e3">.</span></p>
     </div>
-    <div v-else-if="coin && quote && noHits">
+    <div v-else-if="coin && noHits">
       <p class="arb-p">No results. Try a different quote currency.</p>
     </div>
     <best-arb
-      v-else-if="coin && quote && prices.length"
+      v-else-if="coin && prices.length"
       :prices="prices"
       @failedReq="setError"
     >
