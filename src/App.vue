@@ -44,8 +44,11 @@
       @failedReq="setError"
     >
     </best-arb>
-    <div v-else v-show="okLogo">
-      <img id="cglogo" src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo" @load="loadLogo">
+    <div v-else v-show="okLogo" id="logo">
+      <p>Powered by</p>
+      <a href="https://www.coingecko.com/" target="_blank">
+        <img src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo" @load="loadLogo">
+      </a>
     </div>
   </div>
 </template>
@@ -295,10 +298,24 @@ export default {
       opacity: 0;
     }
   }
-  #cglogo {
-    max-width: 50%;
-    margin-top: 15px;
-    animation: fadein 1s;
+  #logo {
+    margin: 25px 20px 0 0;
+  }
+  #logo p {
+    margin: 0 0 -5px 45px;
+    animation: dropin 1s;
+  }
+  @keyframes dropin {
+    0% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  #logo img {
+    max-width: 33%;
+    animation: fadein 0.75s;
 
     /* https://stackoverflow.com/questions/31573142/jump-at-end-of-css-transition */
     backface-visibility: hidden;
