@@ -228,12 +228,15 @@ export default {
   }
   .e1 {
     -webkit-animation: e1 2s linear infinite;
+    animation: e1 2s linear infinite;
   }
   .e2 {
     -webkit-animation: e2 2s linear infinite;
+    animation: e2 2s linear infinite;
   }
   .e3 {
     -webkit-animation: e3 2s linear infinite;
+    animation: e3 2s linear infinite;
   }
   @-webkit-keyframes e1 {
     0% { opacity: 1; }
@@ -250,6 +253,28 @@ export default {
     100% { opacity: 0; }
   }
   @-webkit-keyframes e3 {
+    0% { opacity: 0; }
+    43% { opacity: 0; }
+    44% { opacity: 1; }
+    65% { opacity: 1; }
+    66% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+  @keyframes e1 {
+    0% { opacity: 1; }
+    65% { opacity: 1; }
+    66% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+  @keyframes e2 {
+    0% { opacity: 0; }
+    21% { opacity: 0; }
+    22% { opacity: 1; }
+    65% { opacity: 1; }
+    66% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+  @keyframes e3 {
     0% { opacity: 0; }
     43% { opacity: 0; }
     44% { opacity: 1; }
