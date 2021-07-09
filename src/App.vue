@@ -23,20 +23,23 @@
     </div>
 
     <err-cmp v-if="error" @reload="getCoins"></err-cmp>
-    <!-- <div v-else-if="coin && !quote">
-      <p class="arb-p">{{ loadQuotes }}</p>
-    </div> -->
+    <div v-else-if="noHits">
+      <p class="arb-p">No results. Try a different quote currency.</p>
+    </div>
     <div v-else-if="coin && !this.quotes.length">
-      <p class="arb-p">Fetching quote currencies<span class="e1">.</span><span class="e2">.</span><span class="e3">.</span></p>
+      <p class="arb-p">Fetching quote currencies<span class="e1">.</span>
+        <span class="e2">.</span>
+        <span class="e3">.</span>
+      </p>
     </div>
     <div v-else-if="coin && !quote">
       <p class="arb-p">Choose a quote currency</p>
     </div>
     <div v-else-if="coin && !prices.length">
-      <p class="arb-p">Fetching price data<span class="e1">.</span><span class="e2">.</span><span class="e3">.</span></p>
-    </div>
-    <div v-else-if="coin && noHits">
-      <p class="arb-p">No results. Try a different quote currency.</p>
+      <p class="arb-p">Fetching price data<span class="e1">.</span>
+        <span class="e2">.</span>
+        <span class="e3">.</span>
+      </p>
     </div>
     <best-arb
       v-else-if="coin && prices.length"
@@ -71,25 +74,16 @@ export default {
       prices: [],
       noHits: false,
       loop: null,
-      error: null,
+      error: false,
       okLogo: false
     }
   },
   mounted() {
     this.getCoins();
   },
-  // computed: {
-  //   loadQuotes() {
-  //     if (!this.quotes.length) {
-  //       return 'Fetching data...';
-  //     } else {
-  //       return 'Choose a quote currency';
-  //     }
-  //   }
-  // },
   methods: {
     arbCheck() {
-      this.prices.length = 0; // for if-else
+      this.prices = []; // v-else-if="coin && !prices.length"
 
       if (this.loop) {
         clearInterval(this.loop);
@@ -174,10 +168,7 @@ export default {
         if (this.prices.length < 2 ||
           this.prices[0].last.toFixed(4) === this.prices[this.prices.length - 1].last.toFixed(4)) {
           this.noHits = true;
-          return;
         }
-
-        this.noHits = false;
       } catch {
         this.setError();
       }
@@ -245,58 +236,26 @@ export default {
     animation: e3 2s linear infinite;
   }
   @keyframes e1 {
-    0% {
-      opacity: 1;
-    }
-    65% {
-      opacity: 1;
-    }
-    66% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
+    0% { opacity: 1; }
+    65% { opacity: 1; }
+    66% { opacity: 0; }
+    100% { opacity: 0; }
   }
   @keyframes e2 {
-    0% {
-      opacity: 0;
-    }
-    21% {
-      opacity: 0;
-    }
-    22% {
-      opacity: 1;
-    }
-    65% {
-      opacity: 1;
-    }
-    66% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
+    0% { opacity: 0; }
+    21% { opacity: 0; }
+    22% { opacity: 1; }
+    65% { opacity: 1; }
+    66% { opacity: 0; }
+    100% { opacity: 0; }
   }
   @keyframes e3 {
-    0% {
-      opacity: 0;
-    }
-    43% {
-      opacity: 0;
-    }
-    44% {
-      opacity: 1;
-    }
-    65% {
-      opacity: 1;
-    }
-    66% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
+    0% { opacity: 0; }
+    43% { opacity: 0; }
+    44% { opacity: 1; }
+    65% { opacity: 1; }
+    66% { opacity: 0; }
+    100% { opacity: 0; }
   }
   #logo {
     margin: 25px 20px 0 0;
