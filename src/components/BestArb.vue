@@ -75,6 +75,7 @@ export default {
       return exchange;
     },
     resetCmp() {
+      this.perc = '';
       this.logos = [];
       this.loadCmp = false;
       this.loImg = false;
