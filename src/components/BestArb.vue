@@ -19,7 +19,10 @@
     </div>
   </div>
   <div v-else>
-    <p class="arb-p">Loading opportunity<span class="e1">.</span><span class="e2">.</span><span class="e3">.</span></p>
+    <p class="arb-p">Loading opportunity<span class="ell-1">.</span>
+      <span class="ell-2">.</span>
+      <span class="ell-3">.</span>
+    </p>
   </div>
 </template>
 

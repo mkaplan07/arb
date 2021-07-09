@@ -27,18 +27,18 @@
       <p class="arb-p">No results. Try a different quote currency.</p>
     </div>
     <div v-else-if="coin && !this.quotes.length">
-      <p class="arb-p">Fetching quote currencies<span class="e1">.</span>
-        <span class="e2">.</span>
-        <span class="e3">.</span>
+      <p class="arb-p">Fetching quote currencies<span class="ell-1">.</span>
+        <span class="ell-2">.</span>
+        <span class="ell-3">.</span>
       </p>
     </div>
     <div v-else-if="coin && !quote">
       <p class="arb-p">Choose a quote currency</p>
     </div>
     <div v-else-if="coin && !prices.length">
-      <p class="arb-p">Fetching price data<span class="e1">.</span>
-        <span class="e2">.</span>
-        <span class="e3">.</span>
+      <p class="arb-p">Fetching price data<span class="ell-1">.</span>
+        <span class="ell-2">.</span>
+        <span class="ell-3">.</span>
       </p>
     </div>
     <best-arb
@@ -226,19 +226,19 @@ export default {
   .arb-p {
     margin-top: 16px;
   }
-  .e1 {
-    -webkit-animation: e1 2s linear infinite;
-    animation: e1 2s linear infinite;
+  .ell-1 {
+    -webkit-animation: ellipse-1 2s linear infinite;
+    animation: ellipse-1 2s linear infinite;
   }
-  .e2 {
-    -webkit-animation: e2 2s linear infinite;
-    animation: e2 2s linear infinite;
+  .ell-2 {
+    -webkit-animation: ellipse-2 2s linear infinite;
+    animation: ellipse-2 2s linear infinite;
   }
-  .e3 {
-    -webkit-animation: e3 2s linear infinite;
-    animation: e3 2s linear infinite;
+  .ell-3 {
+    -webkit-animation: ellipse-3 2s linear infinite;
+    animation: ellipse-3 2s linear infinite;
   }
-  @-webkit-keyframes e1 {
+  @-webkit-keyframes ellipse-1 {
     0% {
       opacity: 1;
     }
@@ -252,7 +252,7 @@ export default {
       opacity: 0;
     }
   }
-  @-webkit-keyframes e2 {
+  @-webkit-keyframes ellipse-2 {
     0% {
       opacity: 0;
     }
@@ -272,7 +272,7 @@ export default {
       opacity: 0;
     }
   }
-  @-webkit-keyframes e3 {
+  @-webkit-keyframes ellipse-3 {
     0% {
       opacity: 0;
     }
@@ -292,7 +292,7 @@ export default {
       opacity: 0;
     }
   }
-  @keyframes e1 {
+  @keyframes ellipse-1 {
     0% {
       opacity: 1;
     }
@@ -306,7 +306,7 @@ export default {
       opacity: 0;
     }
   }
-  @keyframes e2 {
+  @keyframes ellipse-2 {
     0% {
       opacity: 0;
     }
@@ -326,7 +326,7 @@ export default {
       opacity: 0;
     }
   }
-  @keyframes e3 {
+  @keyframes ellipse-3 {
     0% {
       opacity: 0;
     }
