@@ -239,48 +239,112 @@ export default {
     animation: e3 2s linear infinite;
   }
   @-webkit-keyframes e1 {
-    0% { opacity: 1; }
-    65% { opacity: 1; }
-    66% { opacity: 0; }
-    100% { opacity: 0; }
+    0% {
+      opacity: 1;
+    }
+    65% {
+      opacity: 1;
+    }
+    66% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
   }
   @-webkit-keyframes e2 {
-    0% { opacity: 0; }
-    21% { opacity: 0; }
-    22% { opacity: 1; }
-    65% { opacity: 1; }
-    66% { opacity: 0; }
-    100% { opacity: 0; }
+    0% {
+      opacity: 0;
+    }
+    21% {
+      opacity: 0;
+    }
+    22% {
+      opacity: 1;
+    }
+    65% {
+      opacity: 1;
+    }
+    66% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
   }
   @-webkit-keyframes e3 {
-    0% { opacity: 0; }
-    43% { opacity: 0; }
-    44% { opacity: 1; }
-    65% { opacity: 1; }
-    66% { opacity: 0; }
-    100% { opacity: 0; }
+    0% {
+      opacity: 0;
+    }
+    43% {
+      opacity: 0;
+    }
+    44% {
+      opacity: 1;
+    }
+    65% {
+      opacity: 1;
+    }
+    66% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
   }
   @keyframes e1 {
-    0% { opacity: 1; }
-    65% { opacity: 1; }
-    66% { opacity: 0; }
-    100% { opacity: 0; }
+    0% {
+      opacity: 1;
+    }
+    65% {
+      opacity: 1;
+    }
+    66% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
   }
   @keyframes e2 {
-    0% { opacity: 0; }
-    21% { opacity: 0; }
-    22% { opacity: 1; }
-    65% { opacity: 1; }
-    66% { opacity: 0; }
-    100% { opacity: 0; }
+    0% {
+      opacity: 0;
+    }
+    21% {
+      opacity: 0;
+    }
+    22% {
+      opacity: 1;
+    }
+    65% {
+      opacity: 1;
+    }
+    66% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
   }
   @keyframes e3 {
-    0% { opacity: 0; }
-    43% { opacity: 0; }
-    44% { opacity: 1; }
-    65% { opacity: 1; }
-    66% { opacity: 0; }
-    100% { opacity: 0; }
+    0% {
+      opacity: 0;
+    }
+    43% {
+      opacity: 0;
+    }
+    44% {
+      opacity: 1;
+    }
+    65% {
+      opacity: 1;
+    }
+    66% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
   }
   #logo {
     margin: 25px 20px 0 0;
