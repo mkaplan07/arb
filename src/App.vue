@@ -227,21 +227,21 @@ export default {
     margin-top: 16px;
   }
   .e1 {
-    animation: e1 2s linear infinite;
+    -webkit-animation: e1 2s linear infinite;
   }
   .e2 {
-    animation: e2 2s linear infinite;
+    -webkit-animation: e2 2s linear infinite;
   }
   .e3 {
-    animation: e3 2s linear infinite;
+    -webkit-animation: e3 2s linear infinite;
   }
-  @keyframes e1 {
+  @-webkit-keyframes e1 {
     0% { opacity: 1; }
     65% { opacity: 1; }
     66% { opacity: 0; }
     100% { opacity: 0; }
   }
-  @keyframes e2 {
+  @-webkit-keyframes e2 {
     0% { opacity: 0; }
     21% { opacity: 0; }
     22% { opacity: 1; }
@@ -249,7 +249,7 @@ export default {
     66% { opacity: 0; }
     100% { opacity: 0; }
   }
-  @keyframes e3 {
+  @-webkit-keyframes e3 {
     0% { opacity: 0; }
     43% { opacity: 0; }
     44% { opacity: 1; }
@@ -261,7 +261,9 @@ export default {
     margin: 25px 20px 0 0;
   }
   #logo p {
-    margin: 0 0 -5px 45px;
+    font-size: 10px;
+    margin: 0 0 -5px 40px;
+
     animation: dropin 1s;
   }
   @keyframes dropin {
@@ -278,6 +280,7 @@ export default {
 
     /* https://stackoverflow.com/questions/31573142/jump-at-end-of-css-transition */
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
   @keyframes fadein {
     from { opacity: 0; }
