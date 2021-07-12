@@ -26,7 +26,7 @@
     <div v-else-if="noHits">
       <p class="arb-p">No results. Try a different quote currency.</p>
     </div>
-    <div v-else-if="coin && !this.quotes.length">
+    <div v-else-if="coin && !quotes.length">
       <p class="arb-p">Fetching quote currencies<span class="ell-1">.</span>
         <span class="ell-2">.</span>
         <span class="ell-3">.</span>
@@ -83,6 +83,7 @@ export default {
   },
   methods: {
     arbCheck() {
+      this.noHits = false;
       this.prices = []; // v-else-if="coin && !prices.length"
 
       if (this.loop) {
