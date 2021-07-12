@@ -130,7 +130,7 @@ export default {
   }
   .arb-logo {
     width: 25px;
-    height: 25px; /* Safari */
+    height: 25px; /* fix Safari */
 
     padding-right: 10px;
   }
