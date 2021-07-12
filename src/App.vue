@@ -91,7 +91,7 @@ export default {
 
       this.loop = setInterval(() => {
         this.getPrices(this.coin, this.quote);
-      }, 2000);
+      }, 5000); // rate-limited 50/min
     },
     async getCoins() {
       try {
