@@ -228,18 +228,18 @@ export default {
     margin-top: 16px;
   }
   .ell-1 {
-    -webkit-animation: ellipse-1 2s linear infinite;
+    /* -webkit-animation: ellipse-1 2s linear infinite; */
     animation: ellipse-1 2s linear infinite;
   }
   .ell-2 {
-    -webkit-animation: ellipse-2 2s linear infinite;
+    /* -webkit-animation: ellipse-2 2s linear infinite; */
     animation: ellipse-2 2s linear infinite;
   }
   .ell-3 {
-    -webkit-animation: ellipse-3 2s linear infinite;
+    /* -webkit-animation: ellipse-3 2s linear infinite; */
     animation: ellipse-3 2s linear infinite;
   }
-  @-webkit-keyframes ellipse-1 {
+  /* @-webkit-keyframes ellipse-1 {
     0% {
       opacity: 1;
     }
@@ -292,7 +292,7 @@ export default {
     100% {
       opacity: 0;
     }
-  }
+  } */
   @keyframes ellipse-1 {
     0% {
       opacity: 1;
@@ -370,7 +370,7 @@ export default {
 
     /* https://stackoverflow.com/questions/31573142/jump-at-end-of-css-transition */
     backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+    /* -webkit-backface-visibility: hidden; */
   }
   @keyframes fadein {
     from { opacity: 0; }
