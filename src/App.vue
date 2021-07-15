@@ -196,6 +196,7 @@ export default {
     min-width: 320px;
     height: 120px;
 
+    background: -webkit-linear-gradient(90deg, rgba(2,0,36,.1) 0%, rgba(190,223,144,.1) 0%, rgba(0,212,255,.1) 100%);
     background: linear-gradient(90deg, rgba(2,0,36,.1) 0%, rgba(190,223,144,.1) 0%, rgba(0,212,255,.1) 100%);
 
     text-align: center;
@@ -215,6 +216,7 @@ export default {
   }
   #arb-selects select {
     max-width: 170px;
+    background-color: #fff; /* iPad/iPhone */
 
     appearance: none;
     border: 1px solid #c7c7c7;
