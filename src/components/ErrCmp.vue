@@ -22,9 +22,13 @@ export default {
     margin: 10px auto;
   }
   button {
+    background-color: #f7f7f7;
+    
     border: 1px solid #c7c7c7;
     padding: 4px 8px;
     transition: background-color 0.1s linear;
+
+    -webkit-tap-highlight-color: transparent;
   }
   button:hover {
     background-color: #bedf90; /* #8dc73d */
