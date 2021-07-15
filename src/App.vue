@@ -208,14 +208,14 @@ export default {
     color: #222;
   }
   #arb-selects {
-    width: 100%;
-
     display: flex;
     justify-content: space-evenly;
 
     margin-top: 10px;
   }
   #arb-selects select {
+    max-width: 170px;
+
     appearance: none;
     border: 1px solid #c7c7c7;
     outline: none;
