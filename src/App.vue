@@ -196,7 +196,8 @@ export default {
     min-width: 320px;
     height: 120px;
 
-    background: linear-gradient(90deg, rgba(2,0,36,.1) 0%, rgba(190,223,144,.1) 0%, rgba(0,212,255,.1) 100%);
+    background-color: #fff; /* protects Shadow DOM */
+    background: linear-gradient(90deg, rgba(2,0,36,.1) 0%, rgba(190,223,144,.1) 0%, rgba(0,212,255,.1) 100%) !important;
 
     text-align: center;
     line-height: 1;
