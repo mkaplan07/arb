@@ -59,7 +59,7 @@ export default {
     },
     async getLogos(exchange) {
       try {
-        let res = await fetch(`https://api.coingecko.com/api/v3/exchanges/${exchange}`);
+        let res = await fetch(`https://ape.coingecko.com/api/v3/exchanges/${exchange}`);
         let arrJSON = await res.json();
 
         this.logos.push(arrJSON.image);
