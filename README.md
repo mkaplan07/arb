@@ -8,11 +8,13 @@ Data provided by CoinGecko
 
 ## Using the Widget
 
-To embed the widget on your site, just drop in the following html:
+To embed the widget on your site, drop in the following html:
 ```
 <arb-widget></arb-widget>
 <script src="https://infallible-lichterman-a72efc.netlify.app/js/app.js"></script>
 ```
+
+Or try the widget [here](https://infallible-lichterman-a72efc.netlify.app/)
 
 Choose a cryptocurrency and a quote currency. The widget returns the best arbitrage opportunity, which it verifies every few seconds. If the opportunity no longer exists or a better one arises, the widget will update.
 
