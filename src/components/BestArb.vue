@@ -123,12 +123,9 @@ export default {
   .arb-detail {
     display: flex;
     justify-content: center;
-    
+
     width: 50%;
   }
-  /* .arb-detail:nth-of-type(1) {
-    padding-left: 20px;
-  } */
   .arb-logo {
     width: 25px;
     height: 25px; /* Safari */
