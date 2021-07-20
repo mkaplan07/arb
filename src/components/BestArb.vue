@@ -33,8 +33,6 @@ export default {
     return {
       perc: '',
       logos: [],
-      loId: '',
-      hiId: '',
       loEx: '',
       hiEx: '',
       loLast: '',
@@ -85,10 +83,8 @@ export default {
     async getDetails(low, high) {
       this.resetCmp();
 
-      this.loId = low.market.identifier;
-      this.hiId = high.market.identifier;
-      await this.getLogos(this.loId);
-      await this.getLogos(this.hiId);
+      await this.getLogos(low.market.identifier);
+      await this.getLogos(high.market.identifier);
 
       this.loLast = low.last.toFixed(4);
       this.hiLast = high.last.toFixed(4);
@@ -101,12 +97,11 @@ export default {
       let low = this.prices[0];
       let high = this.prices[this.prices.length - 1];
 
-      let latest = `${low.market.identifier} ${low.last} – ${high.market.identifier} ${high.last}`;
+      let latest = `${low.market.identifier} ${low.last} vs. ${high.market.identifier} ${high.last}`;
 
       if (latest !== this.currentOpp) {
         await this.getDetails(low, high);
         this.currentOpp = latest;
-        console.log('new opportunity!');
       }
 
       console.log(this.currentOpp);

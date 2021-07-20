@@ -92,7 +92,7 @@ export default {
 
       this.loop = setInterval(() => {
         this.getPrices(this.coin, this.quote);
-      }, 5000); // rate-limited 50/min
+      }, 9000); // rate-limited 50/min
     },
     async getCoins() {
       try {
@@ -165,6 +165,10 @@ export default {
 
         this.prices = arrJSON.tickers.filter(ticker => ticker.target === quote);
         this.prices.sort((a, b) => a.last - b.last);
+
+        // let precios = [];
+        // this.prices.forEach(price => precios.push([price.market.identifier, price.last]));
+        // console.log(precios);
 
         if (this.prices.length < 2 ||
           this.prices[0].last.toFixed(4) === this.prices[this.prices.length - 1].last.toFixed(4)) {
