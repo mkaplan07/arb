@@ -39,6 +39,7 @@ export default {
       hiEx: '',
       loLast: '',
       hiLast: '',
+      currentOpp: null,
       loadCmp: false,
       loImg: false,
       hiImg: false
@@ -100,12 +101,15 @@ export default {
       let low = this.prices[0];
       let high = this.prices[this.prices.length - 1];
 
-      console.log(low.market.identifier, high.market.identifier);
+      let latest = `${low.market.identifier} ${low.last} – ${high.market.identifier} ${high.last}`;
 
-      if (this.loId !== low.market.identifier || this.hiId !== high.market.identifier) {
+      if (latest !== this.currentOpp) {
         await this.getDetails(low, high);
+        this.currentOpp = latest;
+        console.log('new opportunity!');
       }
 
+      console.log(this.currentOpp);
       this.loadCmp = true;
     }
   }
