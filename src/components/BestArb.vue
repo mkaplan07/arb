@@ -117,15 +117,15 @@ export default {
   }
   #arb-output {
     display: flex;
-    max-width: 320px;
-
-    margin: 10px auto;
+    width: 320px;
+    margin: 0 auto;
   }
   .arb-detail {
-    display: flex;
-
-    padding: 0 10px;
+    display: flex;    
     width: 50%;
+  }
+  .arb-detail:nth-of-type(1) {
+    padding-left: 20px;
   }
   .arb-logo {
     width: 25px;
