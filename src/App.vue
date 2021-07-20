@@ -217,7 +217,7 @@ export default {
     margin-top: 10px;
   }
   #arb-selects select {
-    width: 110px;
+    width: 120px;
     height: 25px;
     background-color: #fff; /* iPad, iPhone, Samsung */
 
