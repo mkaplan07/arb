@@ -19,6 +19,7 @@ Or try the widget [here](https://infallible-lichterman-a72efc.netlify.app/)
 Choose a cryptocurrency and a quote currency. The widget returns the best arbitrage opportunity, which it verifies every few seconds. If the opportunity no longer exists or a better one arises, the widget will update.
 
 ![loading new opportunity](/src/assets/update-exch.gif)
+
 ![loading new opportunity](/src/assets/update-price.gif)
 
 Once in a while, the Access-Control-Allow-Origin header is not present in CoinGecko's response. This rarely happens, but when it does...
