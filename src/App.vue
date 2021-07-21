@@ -213,7 +213,7 @@ export default {
     margin-top: 10px;
   }
   #arb-selects select {
-    width: 160px;
+    width: 150px;
     height: 25px;
     background-color: #fff; /* iPad, iPhone, Samsung */
 
@@ -225,6 +225,9 @@ export default {
     margin: 0 5px 0;
 
     font-size: 12px;
+  }
+  #arb-selects select:last-of-type {
+    width: 170px;
   }
   .arb-p {
     margin-top: 16px;
