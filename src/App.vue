@@ -92,7 +92,7 @@ export default {
 
       this.loop = setInterval(() => {
         this.getPrices(this.coin, this.quote);
-      }, 9000); // rate-limited 
+      }, 9000); // rate-limited
     },
     async getCoins() {
       try {
@@ -208,7 +208,7 @@ export default {
   }
   #arb-selects {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 
     margin-top: 10px;
   }
@@ -227,6 +227,7 @@ export default {
   }
   #arb-selects select:last-of-type {
     width: 170px;
+    margin-left: 10px;
   }
   .arb-p {
     margin-top: 16px;
