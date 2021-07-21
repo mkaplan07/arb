@@ -208,12 +208,12 @@ export default {
   }
   #arb-selects {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 
     margin-top: 10px;
   }
   #arb-selects select {
-    width: 120px;
+    width: 140px;
     height: 25px;
     background-color: #fff; /* iPad, iPhone, Samsung */
 
@@ -227,7 +227,6 @@ export default {
   }
   #arb-selects select:last-of-type {
     width: 170px;
-    margin-left: 10px;
   }
   .arb-p {
     margin-top: 16px;
