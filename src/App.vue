@@ -313,7 +313,9 @@ export default {
     }
   }
   #logo img {
-    max-width: 33%;
+    width: 130px;
+    height: 33px;
+    
     animation: fadein 1s;
 
     /* https://stackoverflow.com/questions/31573142/jump-at-end-of-css-transition */
