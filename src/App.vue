@@ -300,17 +300,7 @@ export default {
   }
   #logo p {
     font-size: 10px;
-    margin: 0 0 -5px 40px;
-
-    animation: dropin 1s;
-  }
-  @keyframes dropin {
-    0% {
-      transform: translateY(-5px);
-    }
-    100% {
-      transform: translateY(0);
-    }
+    margin: 0 0 -5px 50px;
   }
   #logo img {
     width: 135px;
