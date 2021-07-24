@@ -50,7 +50,7 @@
     <div v-else v-show="okLogo" id="logo">
       <p>Powered by</p>
       <a href="https://www.coingecko.com/" target="_blank">
-        <img src="./assets/cg-logo.png" alt="CoinGecko logo" @load="loadLogo">
+        <img src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo" @load="loadLogo">
       </a>
     </div>
   </div>
@@ -313,6 +313,9 @@ export default {
     }
   }
   #logo img {
+    width: 135px;
+    height: 35px;
+    
     animation: fadein 1s;
   }
   @keyframes fadein {
