@@ -315,7 +315,6 @@ export default {
   #logo img {
     width: 135px;
     height: 35px;
-    
     animation: fadein 1s;
   }
   @keyframes fadein {
