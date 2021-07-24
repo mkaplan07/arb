@@ -50,7 +50,7 @@
     <div v-else v-show="okLogo" id="logo">
       <p>Powered by</p>
       <a href="https://www.coingecko.com/" target="_blank">
-        <img src="https://static.coingecko.com/s/coingecko-branding-guide-4f5245361f7a47478fa54c2c57808a9e05d31ac7ca498ab189a3827d6000e22b.png" alt="CoinGecko logo" @load="loadLogo">
+        <img src="./assets/cg-logo.png" alt="CoinGecko logo" @load="loadLogo">
       </a>
     </div>
   </div>
@@ -313,13 +313,7 @@ export default {
     }
   }
   #logo img {
-    width: 130px;
-    height: 35px;
-
     animation: fadein 1s;
-
-    /* https://stackoverflow.com/questions/31573142/jump-at-end-of-css-transition */
-    backface-visibility: hidden;
   }
   @keyframes fadein {
     from { opacity: 0; }
