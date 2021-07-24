@@ -306,8 +306,6 @@ export default {
     width: 135px;
     height: 35px;
     animation: fadein 1s;
-
-    backface-visibility: hidden;
   }
   @keyframes fadein {
     from { opacity: 0; }
