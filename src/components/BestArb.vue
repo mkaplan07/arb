@@ -85,6 +85,7 @@ export default {
 
       await this.getLogos(low.market.identifier);
       await this.getLogos(high.market.identifier);
+      console.log(`logos: ${this.logos[0]}, ${this.logos[1]}`);
 
       this.loLast = low.last.toFixed(4);
       this.hiLast = high.last.toFixed(4);
